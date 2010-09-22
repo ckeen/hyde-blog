@@ -1,0 +1,12 @@
+((title . "Tags On This Blog"))
+
+`((h1 "Tags on this blog")
+  ,(map (lambda (tags) 
+        `((a (@ (class "anchor")
+                (name ,(car tags))) ,(car tags))
+          (ul
+          ,(map (lambda (tag)
+                  (let ((title (car tag))
+                        (link (cdr tag)))
+                 `(li (a (@ (href ,link)) ,title)))) (cdr tags)))))
+          (count-tags (all-pages))))

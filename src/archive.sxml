@@ -1,0 +1,11 @@
+((title . "All posts"))
+`((h1 ,($ 'title))
+  ,(map (lambda (page)
+       `((div (@ (class "article-meta"))
+              (a (@ (class "archive-title")
+                    (href ,(page-url page)))
+		,($ 'title page))
+                (div (@ (class "date"))
+                     "posted on "
+                     ,(neat-date (page-updated page))))))
+                (all-pages)))

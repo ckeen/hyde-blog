@@ -1,0 +1,33 @@
+((title . "/dev/random")
+ (subtitle . "Random Thoughts On Programming With Parenthesis")
+ (date . "2010-08-29")
+ (base-uri . "http://pestilenz.org/~ckeen/blog/"))
+
+(let* ((entries (all-pages))
+       (seconds->rfc3339-string (lambda (s)
+				  (rfc3339->string (seconds->rfc3339 s))))
+       (seconds->YYYY-MM-DD (lambda (s)
+			      (time->string (seconds->utc-time s) "%Y-%m-%d"))))
+
+  (make-atom-doc
+   (make-feed
+    title: (make-title ($ 'title))
+    subtitle: (make-subtitle ($ 'subtitle))
+    updated: (seconds->rfc3339-string
+	      (fold (lambda (p c)
+		      (let ((p ($ 'date p)))
+			(if (and c (> c p)) c p)))
+		    #f
+		    entries))
+    id: (format ($ 'tag) ($ 'date) "/")
+    links: (list (make-link uri: (page-url) relation: "self" type: 'atom))
+    entries: (map (lambda (p)
+		    (make-entry title: (make-title ($ 'title p))
+				published: (seconds->rfc3339-string ($ 'date p))
+				updated: (seconds->rfc3339-string (page-updated p))
+                                authors: (list (make-author name: "Christian Kellermann"))
+				id: (format ($ 'tag) (seconds->YYYY-MM-DD ($ 'date p)) (page-path p))
+				links: (list (make-link uri: (page-url p) type: 'xhtml))
+				content: (make-content (read-page p) type: 'html)))
+
+		  entries))))

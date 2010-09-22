@@ -1,0 +1,15 @@
+()
+`((div (@ (class "article-meta"))
+       (h1 (@ (class "title")) ,($ 'title))
+       (div (@ (class "tags"))
+	  "Tagged as: "
+	  ,(fold (lambda (t tags)
+		   (append tags
+			   `(,(and (pair? tags) ", ")
+			     (span (@ (class "tag")) ,t))))
+		 '()
+		 (or ($ 'tags) '())))
+       (div  (@ (class "date"))
+       "written on "  ,(neat-date ($ 'date))))
+  (div (@ (class "article-content"))
+  (inject ,contents)))
