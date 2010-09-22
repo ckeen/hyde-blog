@@ -1,0 +1,22 @@
+The code for my small blog
+
+* About
+
+This repository contains the code parts for my [[http://pestilenz.org/~ckeen/blog][blog]].  It is written
+with [[http://wiki.call-cc.org/egg/hyde][Hyde]] a static website compiler written in the [[http://call-with-current-continuation][CHICKEN scheme]]
+programming language.
+
+* Installation
+
+After cloning this repo you will need a chicken scheme package for
+your system. See the [[http://wiki.call-cc.org/platforms][Platforms & packages]] page on the Chicken Wiki for
+an appropriate package for your operating system. Then install hyde
+using /chicken-install/ which will pull in hyde with all its
+dependencies:
+
+  chicken-install hyde
+
+then compile the site calling /hyde/ in the root directory of the
+repo. You can also call /hyde serve/ which will open up a webserver on
+port 8080 which allows you to experiment on the data. Each page will
+be regenerated upon a new request.
