@@ -1,4 +1,4 @@
-(use hyde hyde-atom environments posix srfi-1)
+(use hyde hyde-atom environments posix srfi-1 regex)
 
 ;; This has been taken from the gazette's hyde config
 ;; Thanks to Moritz Heidkamp for that
@@ -19,7 +19,7 @@
 
 (define (pages-matching regex)
   (map cdr (filter (lambda (p) (string-match regex (car p)))
-		   (environment-ref (page-eval-env) 'pages))))
+		   ((environment-ref (page-eval-env) 'pages)))))
 
 (define (page-url #!optional (page (current-page)))
   (string-append (root-path) (page-path page)))
@@ -42,7 +42,6 @@
                    (5 "medium")
                    (100 "high")))
         (class (filter (lambda (a) (< (length (cdr t)) (car a))) ranges)))
-    (fprintf (current-error-port) "~a ~a~%" (car t) (length (cdr t)))
     (string-append "tag-" (if (pair? class)
                               (cadar class)
                               (cadar ranges)))))

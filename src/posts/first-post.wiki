@@ -1,0 +1,7 @@
+((layouts "blogpost.sxml" "default.sxml")
+ (title . "First post!")
+ (tags chicken scheme hyde)
+ (date . 1305747043.0 )) ; date is (current-seconds)
+
+This is the first post of the new blog!
+
